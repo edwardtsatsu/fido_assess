@@ -1,0 +1,11 @@
+[tool.black]
+line-length = 88  # Set your preferred line length (default is 88)
+target-version = ['py38']  # Specify the target Python version
+include = '\.pyi?$'  # Include Python files for formatting
+exclude = '''
+/(
+    \.git
+    |\.venv
+    |__pycache__
+)/
+'''  # Exclude certain directories
