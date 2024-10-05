@@ -1,6 +1,6 @@
 from configs.database import db_session
 from src.models.user import User
-from src.utils import generate_password, hash_password
+from src.utils import encrypt_text, generate_password, hash_password
 
 
 class UserSeeder:
@@ -14,6 +14,8 @@ class UserSeeder:
 
         if existing_user is None:
             test_user_info = {
+                # "first_name": encrypt_text("test"),
+                # "last_name": encrypt_text("test"),
                 "first_name": "test",
                 "last_name": "test",
                 "email": "test@gmail.com",

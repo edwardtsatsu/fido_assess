@@ -1,6 +1,7 @@
 from abc import abstractmethod
 
-from src.exceptions.resource_not_found_exception import ResourceNotFoundException
+from src.exceptions.resource_not_found_exception import \
+    ResourceNotFoundException
 
 
 class BaseService:
@@ -31,7 +32,7 @@ class BaseService:
         if resource is None:
             raise ResourceNotFoundException(description="Resource not found")
         self.repository.delete(id)
-        return True
+        return resource
 
     @abstractmethod
     def get_response(self):

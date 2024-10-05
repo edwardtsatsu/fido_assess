@@ -1,17 +1,19 @@
-import base64
-
 from cryptography.fernet import Fernet
 from passlib import pwd
 from passlib.context import CryptContext
 
 from configs import settings
-from src.exceptions.decryption_failed_excpetion import DecryptionFailedException
-from src.exceptions.encryption_failed_exception import EncryptionFailedException
+from src.exceptions.decryption_failed_excpetion import \
+    DecryptionFailedException
+from src.exceptions.encryption_failed_exception import \
+    EncryptionFailedException
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-# ENCRYPTION_KEY = settings.encryption_key
-# fernet_cipher = Fernet(ENCRYPTION_KEY.encode("utf-8"))
+
+ENCRYPTION_KEY = settings.encryption_key
+
+fernet_cipher = Fernet(ENCRYPTION_KEY)
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
@@ -27,28 +29,33 @@ def generate_password() -> str:
 
 
 def convert_to_cedis(amount: int) -> float:
+    if amount is None:
+        return 0
     value = amount / 100
     return round(value, 2)
 
 
 def convert_to_pesewas(amount: float) -> int:
+    if amount is None:
+        return 0
     return amount * 100
 
 
-# def encrypt_text(plain_text: str) -> str:
-#     if not isinstance(plain_text, str):
-#         raise EncryptionFailedException("Only string values can be encrypted.")
+def encrypt_text(plain_text: str) -> str:
+    if not isinstance(plain_text, str):
+        raise EncryptionFailedException("Only string values can be encrypted.")
 
-#     encrypted_text = fernet_cipher.encrypt(plain_text.encode("utf-8"))
-#     return encrypted_text.decode("utf-8")
+    encrypted_text = fernet_cipher.encrypt(plain_text.encode("utf-8"))
+    return encrypted_text
 
 
-# def decrypt_text(encrypted_text: str) -> str:
-#     if not isinstance(encrypted_text, str):
-#         raise DecryptionFailedException("Only string values can be decrypted.")
+def decrypt_text(encrypted_text: str) -> str:
+    if not isinstance(encrypted_text, str):
+        raise DecryptionFailedException("Only string values can be decrypted.")
 
-#     try:
-#         decrypted_text = fernet_cipher.decrypt(encrypted_text.encode("utf-8"))
-#         return decrypted_text.decode("utf-8")
-#     except Exception as e:
-#         raise DecryptionFailedException("Decryption failed.") from e
+    try:
+        return fernet_cipher.decrypt(encrypted_text).decode("utf-8")
+
+    except Exception as e:
+        print(e)
+        raise DecryptionFailedException("Decryption failed.") from e

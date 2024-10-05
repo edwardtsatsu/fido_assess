@@ -1,11 +1,12 @@
 from datetime import datetime
-from typing import Optional
+from typing import Optional, Union
 
-from pydantic import BaseModel, ConfigDict, Field, computed_field, field_serializer
+from pydantic import (BaseModel, ConfigDict, Field, computed_field,
+                      field_serializer)
 
 from src.constants.transaction_type import TransactionType
 from src.response.user_response import UserResponse
-from src.utils import convert_to_cedis
+from src.utils import convert_to_cedis, decrypt_text
 
 
 class TransactionResponse(BaseModel):
@@ -17,13 +18,13 @@ class TransactionResponse(BaseModel):
     description: str
     user_id: int
     user: UserResponse = Field(exclude=True)
-    created_at: Optional[datetime] = None
+    created_at: Union[datetime, None]
 
     @computed_field
     def full_name(self) -> str:
         if self.user is None:
             return None
-        return f"{self.user.first_name} {self.user.last_name}"
+        return self.user.full_name
 
     @field_serializer("amount")
     def formatted_amount(self, amount) -> float:

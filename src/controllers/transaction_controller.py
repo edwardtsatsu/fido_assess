@@ -5,9 +5,8 @@ from fastapi_pagination import Page
 from starlette import status
 from typing_extensions import Annotated
 
-from src.requests.transaction_analytics_query_request import (
-    TransactionAnalyticsQueryRequest,
-)
+from src.requests.transaction_analytics_query_request import \
+    TransactionAnalyticsQueryRequest
 from src.requests.transaction_query_request import TransactionQueryRequest
 from src.requests.transaction_request import TransactionRequest
 from src.response.transaction_response import TransactionResponse

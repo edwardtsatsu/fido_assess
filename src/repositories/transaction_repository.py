@@ -1,4 +1,5 @@
 from fastapi import Depends
+from fastapi_pagination import Params
 from fastapi_pagination.ext.sqlalchemy import paginate
 from sqlalchemy import case, desc, func, select
 from sqlalchemy.orm import Session, joinedload
@@ -14,6 +15,19 @@ from src.repositories.base_repository import BaseRepository
 class TransactionRepository(BaseRepository):
     def __init__(self, db_session: Annotated[Session, Depends(get_db)]):
         super().__init__(model=Transaction, db_session=db_session)
+
+    def find_all(self, query=None):
+        db_query = (
+            select(self.model)
+            .where(self.model.del_status.is_(False))
+            .options(joinedload(self.model.user))
+            .order_by(desc(self.model.created_at))
+        )
+        return paginate(
+            self.db_session,
+            self._parse_query(db_query, query),
+            Params(page=query["page"], size=query["size"]),
+        )
 
     def _parse_query(self, db_query, query_param):
         if query_param is None:

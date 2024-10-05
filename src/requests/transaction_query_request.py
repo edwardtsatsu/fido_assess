@@ -6,4 +6,6 @@ from pydantic import BaseModel
 
 
 class TransactionQueryRequest(BaseModel):
-    user_id: Optional[int] = Query(None)
+    user_id: int
+    page: int = Query(1, ge=1)
+    size: int = Query(50, ge=1)
