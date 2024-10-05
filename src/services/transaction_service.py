@@ -6,7 +6,7 @@ from src.response.analytics_response import AnalyticsResponse
 from src.repositories.transaction_repository import TransactionRepository
 from src.response.transaction_response import TransactionResponse
 from src.services.base_service import BaseService
-from src.utils import convert_to_pesewas
+from src.utils import convert_to_cedis
 
 
 class TransactionService(BaseService, ABC):
@@ -19,14 +19,13 @@ class TransactionService(BaseService, ABC):
     def get_response(self):
         return TransactionResponse
 
-    def store(self, data):
-        data["amount"] = convert_to_pesewas(data["amount"])
-        return super().store(data)
-
     def fetch_analytics(self, query):
-        result = self.repository.find_avg_and_total_trans(query["user_id"])
+        user_id = query["user_id"]
+        result = self.repository.find_avg_and_total_trans(user_id)
+        trans_date = self.repository.highest_trans_date(user_id)
         return AnalyticsResponse(
-            avg_amount=result[0],
-            total_credit=result[1],
-            total_debit=result[2],
+            avg_amount=convert_to_cedis(result[0]),
+            total_credit=convert_to_cedis(result[1]),
+            total_debit=convert_to_cedis(result[2]),
+            highest_trans_date=trans_date.strftime("%Y-%m-%d"),
         )

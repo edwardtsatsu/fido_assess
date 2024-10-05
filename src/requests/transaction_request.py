@@ -8,6 +8,7 @@ from configs.database import db_session
 from src.constants.transaction_type import TransactionType
 from src.models.transaction import Transaction
 from src.models.user import User
+from src.utils import convert_to_pesewas
 
 
 class TransactionRequest(BaseModel):
@@ -33,7 +34,7 @@ class TransactionRequest(BaseModel):
     def validate_amount(cls, v):
         if v <= 0:
             raise ValueError("Transaction amount must be greater than 0")
-        return v
+        return convert_to_pesewas(v)
 
     @field_validator("exttrid")
     def unique_transaction(cls, v):

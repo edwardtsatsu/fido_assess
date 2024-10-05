@@ -50,5 +50,20 @@ class TransactionRepository(BaseRepository):
                 )
                 .select_from(Transaction)
                 .where(Transaction.user_id == user_id)
+                .where(Transaction.del_status.is_(False))
             )
         ).fetchone()
+
+    def highest_trans_date(self, user_id):
+        return self.db_session.scalar(
+            select(
+                func.max(Transaction.date),
+                func.count(Transaction.id).label("transaction_count"),
+            )
+            .select_from(Transaction)
+            .where(Transaction.user_id == user_id)
+            .where(Transaction.del_status.is_(False))
+            .group_by(Transaction.date)
+            .order_by(desc("transaction_count"))
+            .limit(1)
+        )
