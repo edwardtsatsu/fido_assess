@@ -115,7 +115,6 @@ class TransactionService(BaseService, ABC):
             invalidate_transactions_cache, resource.user_id, self.redis_service
         )
 
-
     def calculate_analytics(self, user_id):
         result = self.trans_repo.find_avg_and_total_trans(user_id)
         trans_date = self.trans_repo.highest_trans_date(user_id)
