@@ -12,7 +12,8 @@ class User(Base):
     last_name = Column(String, nullable=False)
     email = Column(String, unique=True, nullable=False)
     password = Column(String, nullable=False)
-    is_active = Column(Boolean, default=True)
+    active_status = Column(Boolean, default=True)
+    del_status = Column(Boolean, default=False)
     created_at = Column(DateTime, server_default=func.now(), nullable=True)
     updated_at = Column(DateTime, server_onupdate=func.now(), nullable=True)
 

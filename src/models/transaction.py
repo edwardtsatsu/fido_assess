@@ -5,8 +5,8 @@ from sqlalchemy import Enum as SQLALchemyEnum
 from sqlalchemy import ForeignKey, Integer, Numeric, String, func
 from sqlalchemy.orm import relationship
 
-from src.models.base import Base
 from src.constants.transaction_type import TransactionType
+from src.models.base import Base
 
 
 class Transaction(Base):
@@ -14,7 +14,8 @@ class Transaction(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    date = Column(DateTime, default=datetime.utcnow)
+    date = Column(DateTime)
+    exttrid = Column(String, nullable=False)
     amount = Column(Numeric(10, 2), nullable=False)
     type = Column(SQLALchemyEnum(TransactionType), nullable=False)
     description = Column(String, nullable=False)
