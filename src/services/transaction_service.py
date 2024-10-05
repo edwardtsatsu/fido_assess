@@ -6,6 +6,7 @@ from src.response.analytics_response import AnalyticsResponse
 from src.repositories.transaction_repository import TransactionRepository
 from src.response.transaction_response import TransactionResponse
 from src.services.base_service import BaseService
+from src.utils import convert_to_pesewas
 
 
 class TransactionService(BaseService, ABC):
@@ -18,9 +19,12 @@ class TransactionService(BaseService, ABC):
     def get_response(self):
         return TransactionResponse
 
+    def store(self, data):
+        data["amount"] = convert_to_pesewas(data["amount"])
+        return super().store(data)
+
     def fetch_analytics(self, query):
         result = self.repository.find_avg_and_total_trans(query["user_id"])
-        print(result[0], result[1], result[2])
         return AnalyticsResponse(
             avg_amount=result[0],
             total_credit=result[1],

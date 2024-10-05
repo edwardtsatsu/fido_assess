@@ -26,6 +26,15 @@ def generate_password() -> str:
     return "password" if settings.app_env == "local" else pwd.genword(length=8)
 
 
+def convert_to_cedis(amount: int) -> float:
+    value = amount / 100
+    return round(value, 2)
+
+
+def convert_to_pesewas(amount: float) -> int:
+    return amount * 100
+
+
 # def encrypt_text(plain_text: str) -> str:
 #     if not isinstance(plain_text, str):
 #         raise EncryptionFailedException("Only string values can be encrypted.")

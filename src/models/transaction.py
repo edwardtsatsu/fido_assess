@@ -16,7 +16,7 @@ class Transaction(Base):
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     date = Column(DateTime)
     exttrid = Column(String, nullable=False)
-    amount = Column(Numeric(10, 2), nullable=False)
+    amount = Column(Integer, nullable=False)
     type = Column(SQLALchemyEnum(TransactionType), nullable=False)
     description = Column(String, nullable=False)
     created_at = Column(DateTime, server_default=func.now(), nullable=True)

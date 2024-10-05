@@ -1,10 +1,11 @@
 from datetime import datetime
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict, Field, computed_field
+from pydantic import BaseModel, ConfigDict, Field, computed_field, field_serializer
 
 from src.constants.transaction_type import TransactionType
 from src.response.user_response import UserResponse
+from src.utils import convert_to_cedis
 
 
 class TransactionResponse(BaseModel):
@@ -23,5 +24,9 @@ class TransactionResponse(BaseModel):
         if self.user is None:
             return None
         return f"{self.user.first_name} {self.user.last_name}"
+
+    @field_serializer("amount")
+    def formatted_amount(self, amount) -> float:
+        return convert_to_cedis(amount)
 
     model_config = ConfigDict(from_attributes=True)
