@@ -4,7 +4,7 @@ from src.utils import encrypt_text, generate_password, hash_password
 
 
 class UserSeeder:
-    def __init__(self):
+    def __init__(self, db_session=db_session):
         self.db = db_session
 
     def run(self):

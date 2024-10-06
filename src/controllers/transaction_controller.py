@@ -1,5 +1,3 @@
-import uuid
-
 from fastapi import APIRouter, Depends
 from fastapi_pagination import Page
 from starlette import status

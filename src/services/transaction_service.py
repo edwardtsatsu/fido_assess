@@ -108,7 +108,7 @@ class TransactionService(BaseService, ABC):
         self.background_task.add_task(
             update_user_statistics, resource, self.calculate_analytics
         )
-
+        # invalidate cache
         self.background_task.add_task(
             invalidate_transactions_cache, resource.user_id, self.redis_service
         )

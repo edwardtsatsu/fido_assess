@@ -11,7 +11,7 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 ENCRYPTION_KEY = settings.encryption_key
 
-fernet_cipher = Fernet(ENCRYPTION_KEY)
+cipher = Fernet(ENCRYPTION_KEY)
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
@@ -39,21 +39,11 @@ def convert_to_pesewas(amount: float) -> int:
     return amount * 100
 
 
-def encrypt_text(plain_text: str) -> str:
-    if not isinstance(plain_text, str):
-        raise EncryptionFailedException("Only string values can be encrypted.")
-
-    encrypted_text = fernet_cipher.encrypt(plain_text.encode("utf-8"))
-    return encrypted_text
+def encrypt_text(plain_text: str) -> bytes:
+    encrypted_username = cipher.encrypt(plain_text.encode())
+    return encrypted_username
 
 
-def decrypt_text(encrypted_text: str) -> str:
-    if not isinstance(encrypted_text, str):
-        raise DecryptionFailedException("Only string values can be decrypted.")
-
-    try:
-        return fernet_cipher.decrypt(encrypted_text).decode("utf-8")
-
-    except Exception as e:
-        print(e)
-        raise DecryptionFailedException("Decryption failed.") from e
+def decrypt_text(encrypted_text: bytes) -> str:
+    decrypted_username = cipher.decrypt(encrypted_text).decode()
+    return decrypted_username
