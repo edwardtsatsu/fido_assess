@@ -13,8 +13,12 @@ from src.response.transaction_response import TransactionResponse
 from src.response.user_response import UserResponse
 from src.services.base_service import BaseService
 from src.services.redis_service import RedisService
-from src.tasks import (alert_relevant_systems, calculate_credit_score,
-                       invalidate_transactions_cache, update_user_statistics)
+from src.tasks import (
+    alert_relevant_systems,
+    calculate_credit_score,
+    invalidate_transactions_cache,
+    update_user_statistics,
+)
 from src.utils import convert_to_cedis
 
 

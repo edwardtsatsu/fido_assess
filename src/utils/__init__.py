@@ -3,10 +3,8 @@ from passlib import pwd
 from passlib.context import CryptContext
 
 from configs import settings
-from src.exceptions.decryption_failed_excpetion import \
-    DecryptionFailedException
-from src.exceptions.encryption_failed_exception import \
-    EncryptionFailedException
+from src.exceptions.decryption_failed_excpetion import DecryptionFailedException
+from src.exceptions.encryption_failed_exception import EncryptionFailedException
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 

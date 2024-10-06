@@ -1,8 +1,7 @@
 from datetime import datetime
 from typing import Optional, Union
 
-from pydantic import (BaseModel, ConfigDict, Field, computed_field,
-                      field_serializer)
+from pydantic import BaseModel, ConfigDict, Field, computed_field, field_serializer
 
 from src.constants.transaction_type import TransactionType
 from src.response.user_response import UserResponse
