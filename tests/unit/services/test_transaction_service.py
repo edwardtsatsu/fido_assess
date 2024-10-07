@@ -67,7 +67,6 @@ def test_store_should_return_transaction_response():
     assert actual == expected
 
 
-
 def test_store_should_raise_user_exception_not_found_exception():
     trans_repo_mock = MagicMock()
     background_tasks_mock = MagicMock()

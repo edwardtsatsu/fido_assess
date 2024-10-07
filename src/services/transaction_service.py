@@ -87,7 +87,7 @@ class TransactionService(BaseService, ABC):
         return transactions
 
     def store(self, data):
-        user = self.user_repo.find(data['user_id'])
+        user = self.user_repo.find(data["user_id"])
         if user is None:
             raise UserNotFoundException(description="User not found")
         resource = super().store(data)
