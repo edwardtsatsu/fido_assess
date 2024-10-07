@@ -97,7 +97,7 @@ class TransactionService(BaseService, ABC):
 
     def fetch_analytics(self, query):
         user_id = query["user_id"]
-        
+
         analytics = self.redis_service.retrieve_from_cache(f"analytics_{user_id}")
 
         if analytics is not None:
