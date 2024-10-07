@@ -64,7 +64,7 @@ class TransactionRepository(BaseRepository):
                 )
                 .select_from(Transaction)
                 .where(Transaction.user_id == user_id)
-                .where(Transaction.del_status.is_(False))
+                .where(Transaction.del_status == False)
             )
         ).fetchone()
 
@@ -76,7 +76,7 @@ class TransactionRepository(BaseRepository):
             )
             .select_from(Transaction)
             .where(Transaction.user_id == user_id)
-            .where(Transaction.del_status.is_(False))
+            .where(Transaction.del_status == False)
             .group_by(Transaction.date)
             .order_by(desc("transaction_count"))
             .limit(1)

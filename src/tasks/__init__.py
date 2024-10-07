@@ -29,3 +29,5 @@ def invalidate_transactions_cache(user_id: str, redis_service: RedisService):
 
     for key in cached_keys:
         redis_service.remove_from_cache(key)
+
+    redis_service.remove_from_cache(f"analytics_{user_id}")
