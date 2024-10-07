@@ -41,11 +41,3 @@ volumes:
     driver: local
   redis_data:
     driver: local
-
-
-tests:
-    build:
-      context: .
-    volumes:
-      - .:/src
-    command: ["pytest", "tests"]
