@@ -6,10 +6,8 @@ from sqlalchemy.orm import sessionmaker
 
 from configs.database import get_db
 from main import app
-from src.models.transaction import Transaction
 from src.models.base import Base
 from src.models.user import User
-from src.requests.transaction_request import TransactionRequest
 
 TEST_DATABASE_URL = "sqlite:///:memory:"
 
