@@ -6,8 +6,7 @@ from configs.logger import logger
 async def log_middleware(request: Request, call_next):
     log_dict = {
         "url": request.url.path,
-        "method": request.method,
-        "headers": dict(request.headers),
+        "method": request.method
     }
 
     logger.info(log_dict, extra=log_dict)
