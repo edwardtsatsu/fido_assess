@@ -21,18 +21,6 @@ class TransactionRequest(BaseModel):
 
     model_config = ConfigDict(from_attributes=True)
 
-    # @field_validator("user_id")
-    # def user_exist(cls, v):
-    #     user = (
-    #         next(get_db())
-    #         .scalars(select(User).where(User.id == v).where(User.active_status == True))
-    #         .first()
-    #     )
-    #     print(f"VALIDATION === {user}")
-    #     if user is None:
-    #         raise ValueError("User not found")
-    #     return v
-
     @field_validator("amount")
     def validate_amount(cls, v):
         if v <= 0:
