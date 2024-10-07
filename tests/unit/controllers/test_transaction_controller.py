@@ -5,6 +5,7 @@ from sqlalchemy import StaticPool, create_engine
 from sqlalchemy.orm import sessionmaker
 
 from configs.database import get_db
+from configs.logger import logger
 from main import app
 from src.models.base import Base
 from src.models.user import User
@@ -76,8 +77,6 @@ def test_store_should_return_201():
 
     response = client.post("/transactions", json=transaction_request)
 
-    # Output the response for debugging
-    print("Transaction response:", new_user.id, new_user.active_status)
+    logger.info("Transaction response:", new_user.id, new_user.active_status)
 
-    # Assert that the transaction was created successfully
     assert response.status_code == 201

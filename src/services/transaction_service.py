@@ -6,10 +6,11 @@ from typing import Annotated
 from fastapi import BackgroundTasks, Depends
 from fastapi_pagination import Params, create_page
 
-from src.exceptions.user_not_found_exception import UserNotFoundException
-from src.repositories.user_repository import UserRepository
+from configs.logger import logger
 from src.constants.transaction_type import TransactionType
+from src.exceptions.user_not_found_exception import UserNotFoundException
 from src.repositories.transaction_repository import TransactionRepository
+from src.repositories.user_repository import UserRepository
 from src.response.analytics_response import AnalyticsResponse
 from src.response.transaction_response import TransactionResponse
 from src.response.user_response import UserResponse
@@ -76,7 +77,7 @@ class TransactionService(BaseService, ABC):
                 total=cached_data["total"],
             )
 
-        print("Go DB")
+        logger.info("Performing request to db, when cache is invalidated..")
 
         transactions = self.repository.find_all(query)
         items = dict(transactions)

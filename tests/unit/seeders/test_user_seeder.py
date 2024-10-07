@@ -1,3 +1,4 @@
+from configs.logger import logger
 from seeders.user_seeder import UserSeeder
 from src.models import User
 
@@ -19,7 +20,7 @@ def test_user_seeder(db_session):
     assert user.password != "test"
     assert user.password is not None
 
-    print(f"User ID: {user.id}, User Name: {user.first_name} {user.last_name}")
+    logger.info(f"User ID: {user.id}, User Name: {user.first_name} {user.last_name}")
 
     final_user_count = db_session.query(User).count()
     assert (

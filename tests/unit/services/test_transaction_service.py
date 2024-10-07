@@ -3,8 +3,8 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from src.exceptions.user_not_found_exception import UserNotFoundException
 from src.constants.transaction_type import TransactionType
+from src.exceptions.user_not_found_exception import UserNotFoundException
 from src.models.transaction import Transaction
 from src.models.user import User
 from src.response.transaction_response import TransactionResponse
