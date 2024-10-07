@@ -24,7 +24,6 @@ class BaseService:
 
     def store(self, data):
         resource = self.repository.store(data)
-        print(f"OKAY ===== {self.get_response().model_validate(resource)}")
         return self.get_response().model_validate(resource)
 
     def delete(self, id):

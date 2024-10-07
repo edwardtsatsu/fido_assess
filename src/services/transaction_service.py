@@ -6,6 +6,8 @@ from typing import Annotated
 from fastapi import BackgroundTasks, Depends
 from fastapi_pagination import Params, create_page
 
+from src.exceptions.user_not_found_exception import UserNotFoundException
+from src.repositories.user_repository import UserRepository
 from src.constants.transaction_type import TransactionType
 from src.repositories.transaction_repository import TransactionRepository
 from src.response.analytics_response import AnalyticsResponse
@@ -27,6 +29,7 @@ class TransactionService(BaseService, ABC):
     def __init__(
         self,
         trans_repo: Annotated[TransactionRepository, Depends(TransactionRepository)],
+        user_repo: Annotated[UserRepository, Depends(UserRepository)],
         background_task: BackgroundTasks,
         redis_service: Annotated[RedisService, Depends(RedisService)],
     ):
@@ -34,6 +37,7 @@ class TransactionService(BaseService, ABC):
         self.background_task = background_task
         self.trans_repo = trans_repo
         self.redis_service = redis_service
+        self.user_repo = user_repo
 
     def get_response(self):
         return TransactionResponse
@@ -83,6 +87,9 @@ class TransactionService(BaseService, ABC):
         return transactions
 
     def store(self, data):
+        user = self.user_repo.find(data['user_id'])
+        if user is None:
+            raise UserNotFoundException(description="User not found")
         resource = super().store(data)
         self.perform_background_tasks(resource)
         return resource
