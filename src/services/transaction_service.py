@@ -72,7 +72,7 @@ class TransactionService(BaseService, ABC):
                 total=cached_data["total"],
             )
 
-        print("here")
+        print("Go DB")
 
         transactions = self.repository.find_all(query)
         items = dict(transactions)

@@ -5,7 +5,6 @@ from sqlalchemy.orm import sessionmaker
 from configs.database import Base
 from src.models.user import User
 
-
 TEST_DATABASE_URL = "sqlite:///./test.db"
 
 engine = create_engine(TEST_DATABASE_URL)
